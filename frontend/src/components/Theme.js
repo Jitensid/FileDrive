@@ -35,6 +35,9 @@ const darkTheme = createMuiTheme({
     MuiAppBar: {
       color: colorPropValue,
     },
+    MuiCircularProgress: {
+      color: colorPropValue,
+    },
   },
 });
 
@@ -65,6 +68,9 @@ const lightTheme = createMuiTheme({
       color: colorPropValue,
     },
     MuiAppBar: {
+      color: colorPropValue,
+    },
+    MuiCircularProgress: {
       color: colorPropValue,
     },
   },

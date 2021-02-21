@@ -32,7 +32,7 @@ class TestView(APIView):
     @method_decorator(ensure_csrf_cookie, csrf_protect)
     def post(self, request):
         print(request.user.username)
-        time.sleep(3)
+        time.sleep(1)
         return JsonResponse({"Message": "Django + React is Awesome !!!!"})
 
 # X-CSRFToken in header to enable CSRF Token Validation

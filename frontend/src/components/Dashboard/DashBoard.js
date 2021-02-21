@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -9,14 +9,13 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import { mainListItems, secondaryListItems } from "../listItems/listItems";
-import Deposits from "../Deposits/Deposits";
 import Themechange from "../Themechange/Themechange";
 import LogoutMenu from "../LogoutMenu/LogoutMenu";
 import { ListItem } from "@material-ui/core";
 import FileUpload from "../FileUpload/FileUpload";
+
+import DisplayFiles from "../DisplayFiles/DisplayFiles";
 
 const drawerWidth = 240;
 
@@ -87,7 +86,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -135,14 +133,7 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-          </Grid>
+          <DisplayFiles></DisplayFiles>
           <Box pt={4}></Box>
         </Container>
       </main>
