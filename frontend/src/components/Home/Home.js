@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import AxiosApiInstance from "../axios_instance";
 import Dashboard from "../Dashboard/DashBoard";
+import { trackPromise } from "react-promise-tracker";
 
 function Home(props) {
   useEffect(() => {
     alert("Fetching Data from Django !!!");
-    AxiosApiInstance.AxiosApiInstance.post("api/test/", {
-      dummy: "dummy",
-    });
+    trackPromise(
+      AxiosApiInstance.AxiosApiInstance.post("api/test/", {
+        dummy: "dummy",
+      })
+    );
   }, []);
 
   return (

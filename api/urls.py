@@ -11,5 +11,5 @@ urlpatterns = [
     path('token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_valid'),
     path('register/', api_views.RegisterUserView.as_view(), name='register'),
     path('test/', api_views.TestView.as_view(), name='test'),
-    path('fileupload/', api_views.FileUploadView.as_view(), name='fileupload')
+    path('fileupload/', api_views.FileUploadView.as_view(), name='fileupload'),
 ]
