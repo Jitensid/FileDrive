@@ -4,8 +4,10 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect, ensure_csrf_
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, UserSerializerWithToken, FileUploadSerializer
+from .serializers import UserSerializer, UserSerializerWithToken, FileUploadSerializer, FetchFileSerializer
 import time
+from .models import File
+
 
 class RegisterUserView(APIView):
     serializer_class = UserSerializerWithToken
@@ -52,3 +54,15 @@ class FileUploadView(APIView):
 
         message = file_serializer.errors
         return JsonResponse({"Message": message})
+
+
+class FetchFilesView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @method_decorator(ensure_csrf_cookie, csrf_protect)
+    def post(self, request):
+        file_queryset = File.objects.filter(owner=request.user)
+
+        serialized_data = FetchFileSerializer(file_queryset, many=True)
+
+        return Response(serialized_data.data)

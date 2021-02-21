@@ -1,4 +1,5 @@
 import os
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -12,14 +13,14 @@ directory_name = "Storage/"
 
 
 def get_user_directory(instance, filename):
-    return directory_name + '/user_{0}/{1}'.format(instance.owner.id, filename)
+    return directory_name + '/{0}'.format(filename)
 
 
 class File(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     file = models.FileField(
         upload_to=get_user_directory, storage=OverwriteStorage())
-    created = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(default=datetime.datetime.today)
 
     def filename(self):
         return os.path.basename(self.file.name)
@@ -28,8 +29,7 @@ class File(models.Model):
         return self.filename()
 
     def save(self, *args, **kwargs):
-        existing_file_name = directory_name + "user_" + \
-            str(self.owner.id) + "/" + self.filename()
+        existing_file_name = directory_name + "/" + self.filename()
 
         existing_files = File.objects.filter(file=existing_file_name)
 

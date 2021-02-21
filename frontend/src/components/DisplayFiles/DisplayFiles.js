@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -34,13 +34,16 @@ const TableHeader = () => {
 };
 
 const DisplayFiles = () => {
-  
-  useEffect(() => {
+  const [uploadedfiles, setUploadedFiles] = useState([]);
+
+  useEffect(async () => {
     alert("Fetching Data from Django !!!");
     trackPromise(
-      AxiosApiInstance.AxiosApiInstance.post("api/test/", {
-        dummy: "dummy",
-      })
+      AxiosApiInstance.AxiosApiInstance.post("api/fetchfiles/", {}).then(
+        (response) => {
+          setUploadedFiles(response.data);
+        }
+      )
     );
   }, []);
 
@@ -50,13 +53,14 @@ const DisplayFiles = () => {
       <Table size="small">
         <TableHeader></TableHeader>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
+          {uploadedfiles.map((uploadedfile, index) => (
+            <TableRow key={index}>
               <TableCell>
-                <InsertDriveFileIcon> </InsertDriveFileIcon> {row.date}
+                <InsertDriveFileIcon> </InsertDriveFileIcon>{" "}
+                {uploadedfile.filename}
               </TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell align="right">{row.size}</TableCell>
+              <TableCell>{uploadedfile.created}</TableCell>
+              <TableCell align="right">{uploadedfile.size / 1000} KB</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.settings import api_settings
@@ -62,3 +63,30 @@ class FileUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = File
         fields = '__all__'
+
+
+class FetchFileSerializer(serializers.ModelSerializer):
+    file = serializers.FileField()
+    size = serializers.SerializerMethodField()
+    filename = serializers.SerializerMethodField()
+
+    # get the original representation
+    def to_representation(self, obj):
+        desired_serializer = super(
+            FetchFileSerializer, self).to_representation(obj)
+
+        serialized_date = datetime.datetime.fromisoformat(
+            desired_serializer["created"])
+
+        desired_serializer["created"] = serialized_date.date()
+        return desired_serializer
+
+    def get_size(self, obj):
+        return obj.file.size
+
+    def get_filename(self, obj):
+        return obj.filename()
+
+    class Meta:
+        model = File
+        fields = ('file', 'created', 'size', 'filename')

@@ -12,4 +12,5 @@ urlpatterns = [
     path('register/', api_views.RegisterUserView.as_view(), name='register'),
     path('test/', api_views.TestView.as_view(), name='test'),
     path('fileupload/', api_views.FileUploadView.as_view(), name='fileupload'),
+    path('fetchfiles/', api_views.FetchFilesView.as_view(), name='fetchfiles'),
 ]
