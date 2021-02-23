@@ -26,7 +26,6 @@ function App() {
   return (
     <ThemeProvider theme={darkState ? darkTheme : lightTheme}>
       <CssBaseline>
-        <ProgressSpinner></ProgressSpinner>
         <Router_Switch>
           <Suspense fallback={ProgressSpinner}>
             <Route

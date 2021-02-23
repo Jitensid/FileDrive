@@ -5,20 +5,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import IconButton from "@material-ui/core/IconButton";
 import Title from "../Title/Title";
-
 import AxiosApiInstance from "../axios_instance";
 import { trackPromise } from "react-promise-tracker";
-
-// Generate Order Data
-function createData(id, date, name, size) {
-  return { id, date, name, size };
-}
-
-const rows = [
-  createData(0, "Elvis Presley", "16 Mar, 2019", 312.44),
-  createData(1, "Paul McCartney", "16 Mar, 2019", 866.99),
-];
+import ProgressSpinner from "../ProgressSpinner/ProgressSpinner";
 
 // Table Header Component
 const TableHeader = () => {
@@ -27,6 +19,7 @@ const TableHeader = () => {
       <TableRow>
         <TableCell>Name</TableCell>
         <TableCell>Date</TableCell>
+        <TableCell> Download File</TableCell>
         <TableCell align="right">Size</TableCell>
       </TableRow>
     </TableHead>
@@ -37,7 +30,6 @@ const DisplayFiles = () => {
   const [uploadedfiles, setUploadedFiles] = useState([]);
 
   useEffect(async () => {
-    alert("Fetching Data from Django !!!");
     trackPromise(
       AxiosApiInstance.AxiosApiInstance.post("api/fetchfiles/", {}).then(
         (response) => {
@@ -49,17 +41,25 @@ const DisplayFiles = () => {
 
   return (
     <React.Fragment>
-      <Title> Your Files </Title>
+      <h2> Your Files </h2>
+      <ProgressSpinner></ProgressSpinner>
       <Table size="small">
         <TableHeader></TableHeader>
         <TableBody>
           {uploadedfiles.map((uploadedfile, index) => (
             <TableRow key={index}>
               <TableCell>
-                <InsertDriveFileIcon> </InsertDriveFileIcon>{" "}
+                <IconButton>
+                  <InsertDriveFileIcon> </InsertDriveFileIcon>
+                </IconButton>{" "}
                 {uploadedfile.filename}
               </TableCell>
               <TableCell>{uploadedfile.created}</TableCell>
+              <TableCell>
+                <IconButton href={uploadedfile.file} download>
+                  <CloudDownloadIcon></CloudDownloadIcon>
+                </IconButton>
+              </TableCell>
               <TableCell align="right">{uploadedfile.size / 1000} KB</TableCell>
             </TableRow>
           ))}

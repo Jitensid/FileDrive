@@ -16,7 +16,8 @@ if (
     baseURL = "http://127.0.0.1:8080/";
   }
 } else {
-  baseURL = "https://8e04c339d55d.ngrok.io/";
+  // Add ngrok URL for temporary deployment
+  // baseURL = "https://8e04c339d55d.ngrok.io/";
 }
 
 // Main Axios is used for sending requests to Django Server with Access Token

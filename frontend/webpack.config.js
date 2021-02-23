@@ -1,10 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
-const TerserPlugin = require("terser-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
+
 const { web } = require("webpack");
 
 module.exports = {
-  mode: "production",
+  // mode: "production",
   entry: ["./src"],
   output: {
     path: path.resolve(__dirname, "./static/frontend"),
@@ -37,13 +38,7 @@ module.exports = {
     ],
   },
   optimization: {
-    // minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-      }),
-    ],
+    minimize: true,
   },
   devServer: {
     disableHostCheck: true, // does not check for host when using ngrok
@@ -67,6 +62,7 @@ module.exports = {
         NODE_ENV: JSON.stringify("production"),
       },
     }),
+    new CompressionPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
 };

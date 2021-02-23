@@ -16,6 +16,7 @@ import { ListItem } from "@material-ui/core";
 import FileUpload from "../FileUpload/FileUpload";
 
 import DisplayFiles from "../DisplayFiles/DisplayFiles";
+import ProgressSpinner from "../ProgressSpinner/ProgressSpinner";
 
 const drawerWidth = 240;
 
@@ -101,7 +102,7 @@ export default function Dashboard(props) {
             noWrap
             className={classes.title}
           >
-            My Project Name
+           React Drive
           </Typography>
           <Themechange handleThemeChange={props.handleThemeChange} />
           <LogoutMenu />
@@ -115,7 +116,7 @@ export default function Dashboard(props) {
         open={true}
       >
         <div className={classes.toolbarIcon}>
-          <p> Position for Logo </p>
+          <p> Position for the Logo </p>
         </div>
         <Divider />
         <List>

@@ -3,7 +3,7 @@ import { usePromiseTracker } from "react-promise-tracker";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const ProgressSpinner = (props) => {
+const ProgressSpinner = () => {
   const { promiseInProgress } = usePromiseTracker();
 
   return promiseInProgress === true ? (
