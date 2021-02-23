@@ -13,7 +13,7 @@ directory_name = "Storage/"
 
 
 def get_user_directory(instance, filename):
-    return directory_name + '/{0}'.format(filename)
+    return directory_name + '{0}/{1}'.format(instance.owner.username, filename)
 
 
 class File(models.Model):
@@ -29,7 +29,7 @@ class File(models.Model):
         return self.filename()
 
     def save(self, *args, **kwargs):
-        existing_file_name = directory_name + "/" + self.filename()
+        existing_file_name = directory_name + self.owner.username + "/" + self.filename()
 
         existing_files = File.objects.filter(file=existing_file_name)
 

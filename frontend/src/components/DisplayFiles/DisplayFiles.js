@@ -41,7 +41,7 @@ const DisplayFiles = () => {
 
   return (
     <React.Fragment>
-      <h2> Your Files </h2>
+      <Title> Your Files </Title>
       <ProgressSpinner></ProgressSpinner>
       <Table size="small">
         <TableHeader></TableHeader>
