@@ -29,9 +29,6 @@ const darkTheme = createMuiTheme({
     MuiLink: {
       color: colorPropValue,
     },
-    MuiIcon: {
-      color: colorPropValue,
-    },
     MuiAppBar: {
       color: colorPropValue,
     },
@@ -62,9 +59,6 @@ const lightTheme = createMuiTheme({
       color: colorPropValue,
     },
     MuiLink: {
-      color: colorPropValue,
-    },
-    MuiIcon: {
       color: colorPropValue,
     },
     MuiAppBar: {

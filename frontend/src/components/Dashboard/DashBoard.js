@@ -16,7 +16,6 @@ import { ListItem } from "@material-ui/core";
 import FileUpload from "../FileUpload/FileUpload";
 
 import DisplayFiles from "../DisplayFiles/DisplayFiles";
-import ProgressSpinner from "../ProgressSpinner/ProgressSpinner";
 
 const drawerWidth = 240;
 

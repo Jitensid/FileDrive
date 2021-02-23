@@ -39,7 +39,7 @@ class File(models.Model):
 
         super(File, self).save(*args, **kwargs)
 
-# Signal to delete the actual file once its object is deleted
+# Signal to delete the actual file once its object is deleted   
 
 
 @receiver(post_delete, sender=File)

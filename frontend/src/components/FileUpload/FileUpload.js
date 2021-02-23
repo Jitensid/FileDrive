@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import IconButton from "@material-ui/core/IconButton";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AxiosApiInstance from "../axios_instance";
+import { trackPromise } from "react-promise-tracker";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   circularButton: {
     alignItems: "center",
     borderRadius: 25,
@@ -23,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
 function FileUpload() {
   const classes = useStyles();
 
+  const [uploadFile, setUploadFile] = useState(null);
+
   const validateFile = (e) => {
     let file = e.target.files[0];
-
-    if (file && file.size > 10e6) {
-      alert("Upload a smaller File");
-      return;
-    }
   };
 
   return (
@@ -39,6 +37,7 @@ function FileUpload() {
         id="contained-button-file"
         type="file"
         onChange={validateFile}
+        enctype="multipart/form-data"
       />
       <label htmlFor="contained-button-file">
         <Button
@@ -50,12 +49,6 @@ function FileUpload() {
           Add File
         </Button>
       </label>
-      <input
-        accept="image/*"
-        className={classes.input}
-        id="icon-button-file"
-        type="file"
-      />
     </div>
   );
 }

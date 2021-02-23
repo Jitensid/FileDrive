@@ -78,7 +78,8 @@ class FetchFileSerializer(serializers.ModelSerializer):
         serialized_date = datetime.datetime.fromisoformat(
             desired_serializer["created"])
 
-        desired_serializer["created"] = serialized_date.date()
+        # print(serialized_date.date().strftime("%b %d %Y"))
+        desired_serializer["created"] = serialized_date.date().strftime("%b %d %Y")
         return desired_serializer
 
     def get_size(self, obj):

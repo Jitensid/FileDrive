@@ -64,5 +64,5 @@ class FetchFilesView(APIView):
         file_queryset = File.objects.filter(owner=request.user)
 
         serialized_data = FetchFileSerializer(file_queryset, many=True)
-        time.sleep(5)
+        time.sleep(2)
         return Response(serialized_data.data)

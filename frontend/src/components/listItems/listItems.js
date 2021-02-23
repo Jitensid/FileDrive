@@ -4,6 +4,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
 export const mainListItems = (
@@ -13,6 +14,12 @@ export const mainListItems = (
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <StarOutlineIcon />
+      </ListItemIcon>
+      <ListItemText primary="Starred" />
     </ListItem>
   </div>
 );
