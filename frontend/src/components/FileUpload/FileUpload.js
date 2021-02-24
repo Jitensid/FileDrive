@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,14 +24,19 @@ const useStyles = makeStyles(() => ({
 function FileUpload() {
   const classes = useStyles();
 
-  const [uploadFile, setUploadFile] = useState(null);
-
   const validateFile = (e) => {
     let file = e.target.files[0];
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    trackPromise(
+      AxiosApiInstance.AxiosApiInstance.post("api/fileupload/", formData)
+    );
   };
 
   return (
-    <div>
+    <React.Fragment>
       <input
         className={classes.input}
         id="contained-button-file"
@@ -49,7 +54,7 @@ function FileUpload() {
           Add File
         </Button>
       </label>
-    </div>
+    </React.Fragment>
   );
 }
 

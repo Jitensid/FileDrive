@@ -53,6 +53,23 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 class FileUploadSerializer(serializers.ModelSerializer):
     # owner = serializers.PrimaryKeyRelatedField(read_only=True)
     file = serializers.FileField()
+    size = serializers.SerializerMethodField()
+    filename = serializers.SerializerMethodField()
+
+    # get the original representation
+    def to_representation(self, obj):
+        desired_serializer = super(
+            FileUploadSerializer, self).to_representation(obj)
+
+        serialized_date = datetime.datetime.fromisoformat(
+            desired_serializer["created"])
+
+        # print(serialized_date.date().strftime("%b %d %Y"))
+        desired_serializer["created"] = serialized_date.date().strftime(
+            "%b %d %Y")
+
+        desired_serializer.pop("owner")
+        return desired_serializer
 
     def create(self, validated_data):
         owner = validated_data.pop("owner")
@@ -60,9 +77,15 @@ class FileUploadSerializer(serializers.ModelSerializer):
             owner=owner, **validated_data)
         return file_object
 
+    def get_size(self, obj):
+        return obj.file.size
+
+    def get_filename(self, obj):
+        return obj.filename()
+
     class Meta:
         model = File
-        fields = '__all__'
+        fields = ('file', 'created', 'size', 'owner', 'filename')
 
 
 class FetchFileSerializer(serializers.ModelSerializer):
@@ -79,7 +102,8 @@ class FetchFileSerializer(serializers.ModelSerializer):
             desired_serializer["created"])
 
         # print(serialized_date.date().strftime("%b %d %Y"))
-        desired_serializer["created"] = serialized_date.date().strftime("%b %d %Y")
+        desired_serializer["created"] = serialized_date.date().strftime(
+            "%b %d %Y")
         return desired_serializer
 
     def get_size(self, obj):

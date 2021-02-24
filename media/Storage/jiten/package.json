@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "django-create-react-app": "^0.0.3"
+  }
+}

@@ -48,9 +48,10 @@ class FileUploadView(APIView):
         data = request.data
         data["owner"] = request.user.id
         file_serializer = FileUploadSerializer(data=data)
+        time.sleep(2)
         if file_serializer.is_valid():
             file_serializer.save()
-            return JsonResponse({"Message": "File is Uploaded Successfully!!!"})
+            return Response(file_serializer.data)
 
         message = file_serializer.errors
         return JsonResponse({"Message": message})
@@ -61,7 +62,8 @@ class FetchFilesView(APIView):
 
     @method_decorator(ensure_csrf_cookie, csrf_protect)
     def post(self, request):
-        file_queryset = File.objects.filter(owner=request.user)
+        file_queryset = File.objects.filter(
+            owner=request.user).order_by('created').reverse()
 
         serialized_data = FetchFileSerializer(file_queryset, many=True)
         time.sleep(2)
