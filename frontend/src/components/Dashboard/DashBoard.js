@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -87,6 +87,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard(props) {
   const classes = useStyles();
 
+  const [backendFiles, setbackendFiles] = useState([]);
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -101,7 +103,7 @@ export default function Dashboard(props) {
             noWrap
             className={classes.title}
           >
-           React Drive
+            React Drive
           </Typography>
           <Themechange handleThemeChange={props.handleThemeChange} />
           <LogoutMenu />
@@ -122,7 +124,10 @@ export default function Dashboard(props) {
           {" "}
           <ListItem>
             {" "}
-            <FileUpload></FileUpload>{" "}
+            <FileUpload
+              backendFiles={backendFiles}
+              setbackendFiles={setbackendFiles}
+            />{" "}
           </ListItem>{" "}
         </List>
         <Divider />
@@ -133,7 +138,10 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <DisplayFiles></DisplayFiles>
+          <DisplayFiles
+            backendFiles={backendFiles}
+            setbackendFiles={setbackendFiles}
+          />
           <Box pt={4}></Box>
         </Container>
       </main>

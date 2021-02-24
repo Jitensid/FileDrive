@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function FileUpload() {
+function FileUpload(props) {
   const classes = useStyles();
 
   const validateFile = (e) => {
@@ -31,7 +31,25 @@ function FileUpload() {
     formData.append("file", file);
 
     trackPromise(
-      AxiosApiInstance.AxiosApiInstance.post("api/fileupload/", formData)
+      AxiosApiInstance.AxiosApiInstance.post("api/fileupload/", formData).then(
+        (response) => {
+          const newbackendFiles = props.backendFiles.slice();
+          const first_element = response.data;
+
+          for (var i = newbackendFiles.length - 1; i >= 0; --i) {
+            if (newbackendFiles[i].filename === first_element.filename) {
+              newbackendFiles.splice(i, 1);
+            }
+          }
+
+          newbackendFiles.unshift(first_element);
+          console.log(newbackendFiles);
+
+          // props.backendFiles.push(response.data);
+
+          props.setbackendFiles(newbackendFiles);
+        }
+      )
     );
   };
 

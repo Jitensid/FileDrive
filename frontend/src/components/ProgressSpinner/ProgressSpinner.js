@@ -13,7 +13,7 @@ const ProgressSpinner = () => {
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ minHeight: "50vh" }}
+      style={{ minHeight: "1vh" }}
     >
       <Grid item xs={3}>
         <CircularProgress></CircularProgress>

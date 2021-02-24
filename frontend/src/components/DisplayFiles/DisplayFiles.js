@@ -4,9 +4,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import IconButton from "@material-ui/core/IconButton";
 import Title from "../Title/Title";
+import FileOptions from "../FileOptions/FileOptions";
 import AxiosApiInstance from "../axios_instance";
 import { trackPromise } from "react-promise-tracker";
 import ProgressSpinner from "../ProgressSpinner/ProgressSpinner";
@@ -17,20 +17,18 @@ const TableHeader = () => {
     <TableRow>
       <TableCell>Name</TableCell>
       <TableCell>Date</TableCell>
-      <TableCell> Download File</TableCell>
+      <TableCell>More</TableCell>
       <TableCell align="right">Size</TableCell>
     </TableRow>
   );
 };
 
-const DisplayFiles = () => {
-  const [uploadedfiles, setUploadedFiles] = useState([]);
-
+const DisplayFiles = (props) => {
   useEffect(() => {
     trackPromise(
       AxiosApiInstance.AxiosApiInstance.post("api/fetchfiles/", {}).then(
         (response) => {
-          setUploadedFiles(response.data);
+          props.setbackendFiles(response.data);
         }
       )
     );
@@ -39,10 +37,11 @@ const DisplayFiles = () => {
   return (
     <React.Fragment>
       <Title> Your Files </Title>
+      <ProgressSpinner></ProgressSpinner>
       <Table size="small">
         <TableBody>
           <TableHeader></TableHeader>
-          {uploadedfiles.map((uploadedfile, index) => (
+          {props.backendFiles.map((uploadedfile, index) => (
             <TableRow key={index}>
               <TableCell>
                 {" "}
@@ -53,16 +52,13 @@ const DisplayFiles = () => {
               </TableCell>
               <TableCell>{uploadedfile.created}</TableCell>
               <TableCell>
-                <IconButton href={uploadedfile.file} download>
-                  <CloudDownloadIcon></CloudDownloadIcon>
-                </IconButton>
+                <FileOptions uploadedfile={uploadedfile}></FileOptions>
               </TableCell>
               <TableCell align="right">{uploadedfile.size / 1000} KB</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <ProgressSpinner></ProgressSpinner>
     </React.Fragment>
   );
 };
