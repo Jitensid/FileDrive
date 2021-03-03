@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserSerializerWithToken, FileUploadSerializer, FetchFileSerializer
 import time
-from .models import File
+from .models import File, directory_name
 
 
 class RegisterUserView(APIView):
@@ -79,7 +79,7 @@ class FetchStarredFilesView(APIView):
             owner=request.user, is_starred=True).order_by('created').reverse()
 
         serialized_data = FetchFileSerializer(file_queryset, many=True)
-        time.sleep(2)
+        time.sleep(0.05)
         return Response(serialized_data.data)
 
 
@@ -88,4 +88,14 @@ class DeleteFileView(APIView):
 
     @method_decorator(ensure_csrf_cookie, csrf_protect)
     def post(self, request):
-        file_to_delete = File.objects.all()
+
+        filename = request.data["filename"]
+
+        actual_file = directory_name + request.user.username + "/" + filename
+
+        file_to_delete = File.objects.get(owner=request.user, file=actual_file)
+
+        file_to_delete.delete()
+
+        time.sleep(2)
+        return JsonResponse({"jhhu": "ef"})

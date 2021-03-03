@@ -44,9 +44,6 @@ function FileUpload(props) {
 
           newbackendFiles.unshift(first_element);
           console.log(newbackendFiles);
-
-          // props.backendFiles.push(response.data);
-
           props.setbackendFiles(newbackendFiles);
         }
       )

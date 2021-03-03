@@ -135,11 +135,6 @@ export default function Dashboard(props) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {/* <DisplayFiles
-            backendFiles={backendFiles}
-            setbackendFiles={setbackendFiles}
-          ></DisplayFiles> */}
-
           <Route
             path="/"
             exact

@@ -114,4 +114,4 @@ class FetchFileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = File
-        fields = ('file', 'created', 'size', 'filename')
+        fields = ('file', 'created', 'size', 'filename', 'is_starred')

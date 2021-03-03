@@ -53,8 +53,9 @@ const StarredFiles = (props) => {
               <TableCell>{uploadedfile.created}</TableCell>
               <TableCell>
                 <FileOptions
-                  componentname="StarredFiles"
                   uploadedfile={uploadedfile}
+                  backendFiles={props.backendFiles}
+                  setbackendFiles={props.setbackendFiles}
                 ></FileOptions>
               </TableCell>
               <TableCell align="right">{uploadedfile.size / 1000} KB</TableCell>

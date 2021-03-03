@@ -33,7 +33,6 @@ class File(models.Model):
 
         # This is Save Operation
         if self._state.adding is True:
-            print("Query Executed Now")
             existing_file_name = directory_name + self.owner.username + "/" + self.filename()
 
             existing_files = File.objects.filter(file=existing_file_name)
