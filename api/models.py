@@ -21,6 +21,7 @@ class File(models.Model):
     file = models.FileField(
         upload_to=get_user_directory, storage=OverwriteStorage())
     created = models.DateTimeField(default=datetime.datetime.today)
+    is_starred = models.BooleanField(default=False)
 
     def filename(self):
         return os.path.basename(self.file.name)
@@ -29,22 +30,27 @@ class File(models.Model):
         return self.filename()
 
     def save(self, *args, **kwargs):
-        existing_file_name = directory_name + self.owner.username + "/" + self.filename()
 
-        existing_files = File.objects.filter(file=existing_file_name)
+        # This is Save Operation
+        if self._state.adding is True:
+            print("Query Executed Now")
+            existing_file_name = directory_name + self.owner.username + "/" + self.filename()
 
-        if existing_files:
-            for existing_file in existing_files:
-                existing_file.delete()
+            existing_files = File.objects.filter(file=existing_file_name)
+
+            if existing_files:
+                for existing_file in existing_files:
+                    existing_file.delete()
 
         super(File, self).save(*args, **kwargs)
 
-# Signal to delete the actual file once its object is deleted   
+# Signal to delete the actual file once its object is deleted
 
 
 @receiver(post_delete, sender=File)
 def submission_delete(sender, instance, **kwargs):
     instance.file.delete(False)
+
 
 # class Folder(models.Model):
 #     owner = models.ForeignKey(User, on_delete=models.CASCADE)

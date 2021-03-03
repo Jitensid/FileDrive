@@ -68,3 +68,24 @@ class FetchFilesView(APIView):
         serialized_data = FetchFileSerializer(file_queryset, many=True)
         time.sleep(2)
         return Response(serialized_data.data)
+
+
+class FetchStarredFilesView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @method_decorator(ensure_csrf_cookie, csrf_protect)
+    def post(self, request):
+        file_queryset = File.objects.filter(
+            owner=request.user, is_starred=True).order_by('created').reverse()
+
+        serialized_data = FetchFileSerializer(file_queryset, many=True)
+        time.sleep(2)
+        return Response(serialized_data.data)
+
+
+class DeleteFileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @method_decorator(ensure_csrf_cookie, csrf_protect)
+    def post(self, request):
+        file_to_delete = File.objects.all()

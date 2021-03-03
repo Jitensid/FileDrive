@@ -7,15 +7,16 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import Container from "@material-ui/core/Container";
-import { mainListItems, secondaryListItems } from "../listItems/listItems";
 import Themechange from "../Themechange/Themechange";
 import LogoutMenu from "../LogoutMenu/LogoutMenu";
 import { ListItem } from "@material-ui/core";
 import FileUpload from "../FileUpload/FileUpload";
-
 import DisplayFiles from "../DisplayFiles/DisplayFiles";
+import StarredFiles from "../StarredFiles/StarredFiles";
+import { mainListItems } from "../listItems/listItems";
+
+import { Route } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -119,7 +120,6 @@ export default function Dashboard(props) {
         <div className={classes.toolbarIcon}>
           <p> Position for the Logo </p>
         </div>
-        <Divider />
         <List>
           {" "}
           <ListItem>
@@ -130,17 +130,34 @@ export default function Dashboard(props) {
             />{" "}
           </ListItem>{" "}
         </List>
-        <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <DisplayFiles
+          {/* <DisplayFiles
             backendFiles={backendFiles}
             setbackendFiles={setbackendFiles}
+          ></DisplayFiles> */}
+
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <DisplayFiles
+                backendFiles={backendFiles}
+                setbackendFiles={setbackendFiles}
+              ></DisplayFiles>
+            )}
+          />
+          <Route
+            path="/starred"
+            render={() => (
+              <StarredFiles
+                backendFiles={backendFiles}
+                setbackendFiles={setbackendFiles}
+              ></StarredFiles>
+            )}
           />
           <Box pt={4}></Box>
         </Container>

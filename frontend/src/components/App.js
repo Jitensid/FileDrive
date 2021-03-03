@@ -32,12 +32,16 @@ function App() {
               path="/"
               render={() =>
                 localStorage.getItem("refresh_token") ? (
-                  <Dashboard handleThemeChange={handleThemeChange} />
+                  <>
+                    <Dashboard
+                      handleThemeChange={handleThemeChange}
+                    ></Dashboard>
+                    {/* <Route path="/" component={DisplayFiles}></Route> */}
+                  </>
                 ) : (
                   <Login />
                 )
               }
-              exact
             />
             {/* <Route path="/" component={!(localStorage.getItem("refresh_token")) ? Login : Home} exact /> */}
             <Route path="/register/" component={Register} />

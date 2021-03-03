@@ -16,6 +16,14 @@ const FileOptions = (props) => {
     setAnchorEl(null);
   };
 
+  const show_valid_menu_option = (componentname) => {
+    if (componentname === "StarredFiles") {
+      return <MenuItem onClick={handleClose}>Remove from Starred Files</MenuItem>;
+    }
+
+    return <MenuItem onClick={handleClose}>Add to Starred Files</MenuItem>;
+  };
+
   return (
     <React.Fragment>
       <IconButton onClick={showOptions}>
@@ -39,7 +47,8 @@ const FileOptions = (props) => {
             Download
           </Link>{" "}
         </MenuItem>
-        <MenuItem onClick={handleClose}>Other</MenuItem>
+        {show_valid_menu_option(props.componentname)}
+        <MenuItem onClick={handleClose}>Delete</MenuItem>
       </Menu>
     </React.Fragment>
   );

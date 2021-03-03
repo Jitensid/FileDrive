@@ -23,10 +23,10 @@ const TableHeader = () => {
   );
 };
 
-const DisplayFiles = (props) => {
+const StarredFiles = (props) => {
   useEffect(() => {
     trackPromise(
-      AxiosApiInstance.AxiosApiInstance.post("api/fetchfiles/", {}).then(
+      AxiosApiInstance.AxiosApiInstance.post("api/fetchstarredfiles/", {}).then(
         (response) => {
           props.setbackendFiles(response.data);
         }
@@ -36,7 +36,7 @@ const DisplayFiles = (props) => {
 
   return (
     <React.Fragment>
-      <Title> Your Files </Title>
+      <Title> Your Starred Files </Title>
       <ProgressSpinner></ProgressSpinner>
       <Table size="small">
         <TableBody>
@@ -53,7 +53,7 @@ const DisplayFiles = (props) => {
               <TableCell>{uploadedfile.created}</TableCell>
               <TableCell>
                 <FileOptions
-                  componentname="DisplayFiles"
+                  componentname="StarredFiles"
                   uploadedfile={uploadedfile}
                 ></FileOptions>
               </TableCell>
@@ -66,4 +66,4 @@ const DisplayFiles = (props) => {
   );
 };
 
-export default DisplayFiles;
+export default StarredFiles;

@@ -7,4 +7,5 @@ urlpatterns = [
     path('page/', frontend_views.index, name='page'),
     path('private/', frontend_views.index, name='private'),
     path('register/', frontend_views.index, name='register'),
+    path('starred/', frontend_views.index, name='starred'),
 ]
