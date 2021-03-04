@@ -10,7 +10,7 @@ const SnackbarMessage = () => {
     if (reason === "clickaway") {
       return;
     }
-    SnackbarDetails.setsnackbarstate({message:"",open:false})
+    SnackbarDetails.setsnackbarstate({message:"",open:false});
   };
 
   const vertical = "bottom",

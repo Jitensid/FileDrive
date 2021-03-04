@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AxiosApiInstance from "../axios_instance";
 import { trackPromise } from "react-promise-tracker";
 import { SnackbarContext } from "../contexts/SnackbarContext/SnackbarContext";
+
 const useStyles = makeStyles(() => ({
   circularButton: {
     alignItems: "center",
@@ -44,7 +45,6 @@ function FileUpload(props) {
           }
 
           newbackendFiles.unshift(first_element);
-          console.log(newbackendFiles);
           props.setbackendFiles(newbackendFiles);
 
           SnackbarDetails.setsnackbarstate({

@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import IconButton from "@material-ui/core/IconButton";
 import Link from "@material-ui/core/Link";
 import AxiosApiInstance from "../axios_instance";
+import { SnackbarContext } from "../contexts/SnackbarContext/SnackbarContext";
 import { trackPromise } from "react-promise-tracker";
 
 const FileOptions = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const SnackbarDetails = useContext(SnackbarContext);
 
   const showOptions = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +32,10 @@ const FileOptions = (props) => {
           }
         }
         props.setbackendFiles(newbackendFiles);
+        SnackbarDetails.setsnackbarstate({
+          message: "File Deleted Successfully",
+          open: true,
+        });
       })
     );
 
