@@ -8,25 +8,25 @@ import Divider from "@material-ui/core/Divider";
 import { NavLink } from "react-router-dom";
 
 export const mainListItems = (
-  <div>
+  <React.Fragment>
     <Divider />
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <NavLink to="/" style={{ textDecoration: "none", color: "unset" }}>
-        <ListItemText primary="Dashboard" />
-      </NavLink>
-    </ListItem>
+    <NavLink to="/" style={{ textDecoration: "none", color: "unset" }}>
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+          <ListItemText style={{ marginLeft: "10px" }} primary="Dashboard" />
+        </ListItemIcon>
+      </ListItem>
+    </NavLink>
     <Divider />
-    <ListItem button>
-      <ListItemIcon>
-        <StarOutlineIcon />
-      </ListItemIcon>
-      <NavLink to="/starred" style={{ textDecoration: "none", color: "unset" }}>
-        <ListItemText primary="Starred" />
-      </NavLink>
-    </ListItem>
+    <NavLink to="/starred" style={{ textDecoration: "none", color: "unset" }}>
+      <ListItem button>
+        <ListItemIcon>
+          <StarOutlineIcon />
+          <ListItemText style={{ marginLeft: "10px" }} primary="Starred" />
+        </ListItemIcon>
+      </ListItem>
+    </NavLink>
     <Divider />
-  </div>
+  </React.Fragment>
 );

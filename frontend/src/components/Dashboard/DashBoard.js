@@ -14,10 +14,10 @@ import { ListItem } from "@material-ui/core";
 import FileUpload from "../FileUpload/FileUpload";
 import DisplayFiles from "../DisplayFiles/DisplayFiles";
 import StarredFiles from "../StarredFiles/StarredFiles";
+import SnackbarMessage from "../SnackbarMessage/SnackbarMessage";
 import { mainListItems } from "../listItems/listItems";
-
 import { Route } from "react-router-dom";
-
+import { SnackbarContextProvider } from "../contexts/SnackbarContext/SnackbarContext";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -91,72 +91,75 @@ export default function Dashboard(props) {
   const [backendFiles, setbackendFiles] = useState([]);
 
   return (
-    <div className={classes.root}>
-      <AppBar
-        position="absolute"
-        className={clsx(classes.appBar, classes.appBarShift)}
-      >
-        <Toolbar>
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            React Drive
-          </Typography>
-          <Themechange handleThemeChange={props.handleThemeChange} />
-          <LogoutMenu />
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper),
-        }}
-        open={true}
-      >
-        <div className={classes.toolbarIcon}>
-          <p> Position for the Logo </p>
-        </div>
-        <List>
-          {" "}
-          <ListItem>
+    <SnackbarContextProvider>
+      <div className={classes.root}>
+        <AppBar
+          position="absolute"
+          className={clsx(classes.appBar, classes.appBarShift)}
+        >
+          <Toolbar>
+            <Typography
+              component="h1"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+            >
+              React Drive
+            </Typography>
+            <Themechange handleThemeChange={props.handleThemeChange} />
+            <LogoutMenu />
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper),
+          }}
+          open={true}
+        >
+          <div className={classes.toolbarIcon}>
+            <p> Position for the Logo </p>
+          </div>
+          <List>
             {" "}
-            <FileUpload
-              backendFiles={backendFiles}
-              setbackendFiles={setbackendFiles}
-            />{" "}
-          </ListItem>{" "}
-        </List>
-        <List>{mainListItems}</List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Route
-            path="/"
-            exact
-            render={() => (
-              <DisplayFiles
+            <ListItem>
+              {" "}
+              <FileUpload
                 backendFiles={backendFiles}
                 setbackendFiles={setbackendFiles}
-              ></DisplayFiles>
-            )}
-          />
-          <Route
-            path="/starred"
-            render={() => (
-              <StarredFiles
-                backendFiles={backendFiles}
-                setbackendFiles={setbackendFiles}
-              ></StarredFiles>
-            )}
-          />
-          <Box pt={4}></Box>
-        </Container>
-      </main>
-    </div>
+              />{" "}
+            </ListItem>{" "}
+          </List>
+          <List>{mainListItems}</List>
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <DisplayFiles
+                  backendFiles={backendFiles}
+                  setbackendFiles={setbackendFiles}
+                ></DisplayFiles>
+              )}
+            />
+            <Route
+              path="/starred"
+              render={() => (
+                <StarredFiles
+                  backendFiles={backendFiles}
+                  setbackendFiles={setbackendFiles}
+                ></StarredFiles>
+              )}
+            />
+            <Box pt={4}></Box>
+            <SnackbarMessage></SnackbarMessage>
+          </Container>
+        </main>
+      </div>
+    </SnackbarContextProvider>
   );
 }

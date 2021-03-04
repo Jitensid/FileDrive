@@ -98,4 +98,4 @@ class DeleteFileView(APIView):
         file_to_delete.delete()
 
         time.sleep(2)
-        return JsonResponse({"jhhu": "ef"})
+        return JsonResponse({"Message": "File Deleted Successfully"})

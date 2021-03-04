@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AxiosApiInstance from "../axios_instance";
 import { trackPromise } from "react-promise-tracker";
-
+import { SnackbarContext } from "../contexts/SnackbarContext/SnackbarContext";
 const useStyles = makeStyles(() => ({
   circularButton: {
     alignItems: "center",
@@ -23,6 +23,7 @@ const useStyles = makeStyles(() => ({
 
 function FileUpload(props) {
   const classes = useStyles();
+  const SnackbarDetails = useContext(SnackbarContext);
 
   const validateFile = (e) => {
     let file = e.target.files[0];
@@ -45,6 +46,11 @@ function FileUpload(props) {
           newbackendFiles.unshift(first_element);
           console.log(newbackendFiles);
           props.setbackendFiles(newbackendFiles);
+
+          SnackbarDetails.setsnackbarstate({
+            message: "File Uploaded Successfully",
+            open: true,
+          });
         }
       )
     );
