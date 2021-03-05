@@ -85,7 +85,7 @@ function Register() {
     })
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        history.push("/");
+        history.push("/login/");
       })
       .catch((error) => {
         alert(error);
@@ -202,7 +202,7 @@ function Register() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <RouterLink to="/">
+              <RouterLink to="/login/">
                 <Link variant="body2">Already have an account? Login</Link>
               </RouterLink>
             </Grid>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
@@ -9,7 +9,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import LoginAxiosApiInstance from "../axios_instance";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
@@ -51,14 +51,15 @@ function Login() {
     LoginAxiosApiInstance.LoginAxiosApiInstance.post("api/token/", {
       username: formState.username,
       password: formState.password,
-    }).catch((error) => {
-      // alert(JSON.stringify(error.response.data.detail));
-      setformState({
-        username: "",
-        password: "",
-        errorMessage: JSON.stringify(error.response.data.detail),
+    })
+      .catch((error) => {
+        // alert(JSON.stringify(error.response.data.detail));
+        setformState({
+          username: "",
+          password: "",
+          errorMessage: JSON.stringify(error.response.data.detail),
+        });
       });
-    });
   };
 
   const handleChange = (e) => {

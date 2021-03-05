@@ -17,7 +17,9 @@ import StarredFiles from "../StarredFiles/StarredFiles";
 import SnackbarMessage from "../SnackbarMessage/SnackbarMessage";
 import { mainListItems } from "../listItems/listItems";
 import { Route } from "react-router-dom";
-import { SnackbarContextProvider } from "../contexts/SnackbarContext/SnackbarContext";
+import {
+  SnackbarContextProvider,
+} from "../contexts/SnackbarContext/SnackbarContext";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({

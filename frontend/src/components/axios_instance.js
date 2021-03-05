@@ -125,7 +125,7 @@ LoginAxiosApiInstance.interceptors.response.use(
     alert("Login Successful!");
     localStorage.setItem("refresh_token", response.data.refresh);
     localStorage.setItem("access_token", response.data.access);
-    window.location.reload();
+    window.location.href = "/";
     return response;
   },
   (error) => {

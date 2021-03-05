@@ -79,7 +79,7 @@ class FetchStarredFilesView(APIView):
             owner=request.user, is_starred=True).order_by('created').reverse()
 
         serialized_data = FetchFileSerializer(file_queryset, many=True)
-        time.sleep(0.05)
+        time.sleep(2)
         return Response(serialized_data.data)
 
 
