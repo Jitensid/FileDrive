@@ -14,5 +14,6 @@ urlpatterns = [
     path('fileupload/', api_views.FileUploadView.as_view(), name='fileupload'),
     path('fetchfiles/', api_views.FetchFilesView.as_view(), name='fetchfiles'),
     path('fetchstarredfiles/', api_views.FetchStarredFilesView.as_view(), name='fetchfiles'),
-    path('deletefile/',api_views.DeleteFileView.as_view(), name = 'deletefile')
+    path('deletefile/',api_views.DeleteFileView.as_view(), name = 'deletefile'),
+    path('changefilestarstatus/',api_views.ChangeFileStarStatus.as_view(),name='changefilestarstatus')
 ]

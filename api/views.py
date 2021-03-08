@@ -99,3 +99,22 @@ class DeleteFileView(APIView):
 
         time.sleep(2)
         return JsonResponse({"Message": "File Deleted Successfully"})
+
+
+class ChangeFileStarStatus(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @method_decorator(ensure_csrf_cookie, csrf_protect)
+    def post(self, request):
+
+        time.sleep(2)
+        filename = request.data["filename"]
+
+        actual_filename = directory_name + request.user.username + "/" + filename
+
+        actual_file = File.objects.get(
+            owner=request.user, file=actual_filename)
+
+        actual_file.changefilestartstatus()
+
+        return JsonResponse({"Message": "Operation Successful"})

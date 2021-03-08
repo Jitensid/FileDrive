@@ -43,6 +43,10 @@ class File(models.Model):
 
         super(File, self).save(*args, **kwargs)
 
+    def changefilestartstatus(self):
+        self.is_starred = not(self.is_starred)
+        self.save()
+
 # Signal to delete the actual file once its object is deleted
 
 

@@ -20,6 +20,54 @@ const FileOptions = (props) => {
     setAnchorEl(null);
   };
 
+  const getIndex = (filename) => {
+    console.log(window.location.pathname);
+    for (var i = props.backendFiles.length - 1; i >= 0; i--) {
+      if (props.backendFiles[i].filename === filename) {
+        console.log(props.backendFiles[i]);
+        return i;
+      }
+    }
+
+    return 0;
+  };
+
+  const makeRequest = (filename, fileindex, newstatus) => {
+    trackPromise(
+      AxiosApiInstance.AxiosApiInstance.post("api/changefilestarstatus/", {
+        filename: filename,
+      }).then(() => {
+        const newbackendFiles = props.backendFiles.slice();
+        newbackendFiles[fileindex].is_starred = newstatus;
+
+        if (window.location.pathname === "/starred") {
+          newbackendFiles.splice(fileindex, 1);
+        }
+
+        props.setbackendFiles(newbackendFiles);
+        SnackbarDetails.setsnackbarstate({
+          message:
+            newstatus === true
+              ? "Added to Starred Files"
+              : "Removed from Starred Files",
+          open: true,
+        });
+      })
+    );
+  };
+
+  const addtoStarredFiles = (filename) => {
+    var fileindex = getIndex(filename);
+    makeRequest(filename, fileindex, true);
+    handleClose();
+  };
+
+  const removefromStarredFiles = (filename) => {
+    var fileindex = getIndex(filename);
+    makeRequest(filename, fileindex, false);
+    handleClose();
+  };
+
   const deleteFile = (filename) => {
     trackPromise(
       AxiosApiInstance.AxiosApiInstance.post("api/deletefile/", {
@@ -42,14 +90,20 @@ const FileOptions = (props) => {
     handleClose();
   };
 
-  const show_valid_menu_option = (starred) => {
-    if (starred) {
+  const show_valid_menu_option = (fileelement) => {
+    if (fileelement.is_starred) {
       return (
-        <MenuItem onClick={handleClose}>Remove from Starred Files</MenuItem>
+        <MenuItem onClick={() => removefromStarredFiles(fileelement.filename)}>
+          Remove from Starred Files
+        </MenuItem>
       );
     }
 
-    return <MenuItem onClick={handleClose}>Add to Starred Files</MenuItem>;
+    return (
+      <MenuItem onClick={() => addtoStarredFiles(fileelement.filename)}>
+        Add to Starred Files
+      </MenuItem>
+    );
   };
 
   return (
@@ -75,7 +129,7 @@ const FileOptions = (props) => {
             Download
           </Link>{" "}
         </MenuItem>
-        {show_valid_menu_option(props.uploadedfile.is_starred)}
+        {show_valid_menu_option(props.uploadedfile)}
         <MenuItem onClick={() => deleteFile(props.uploadedfile.filename)}>
           Delete
         </MenuItem>
