@@ -9,6 +9,7 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Themechange from "../Themechange/Themechange";
+import RepoLink from "../RepoLink/RepoLink";
 import LogoutMenu from "../LogoutMenu/LogoutMenu";
 import { ListItem } from "@material-ui/core";
 import FileUpload from "../FileUpload/FileUpload";
@@ -17,9 +18,7 @@ import StarredFiles from "../StarredFiles/StarredFiles";
 import SnackbarMessage from "../SnackbarMessage/SnackbarMessage";
 import { mainListItems } from "../listItems/listItems";
 import { Route } from "react-router-dom";
-import {
-  SnackbarContextProvider,
-} from "../contexts/SnackbarContext/SnackbarContext";
+import { SnackbarContextProvider } from "../contexts/SnackbarContext/SnackbarContext";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -85,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  iconbutton: {
+    padding: "500 px",
+  },
 }));
 
 export default function Dashboard(props) {
@@ -109,6 +111,7 @@ export default function Dashboard(props) {
             >
               React Drive
             </Typography>
+            <RepoLink className={classes.iconbutton}></RepoLink>
             <Themechange handleThemeChange={props.handleThemeChange} />
             <LogoutMenu />
           </Toolbar>
@@ -120,9 +123,7 @@ export default function Dashboard(props) {
           }}
           open={true}
         >
-          <div className={classes.toolbarIcon}>
-            <p> Position for the Logo </p>
-          </div>
+          <div className={classes.toolbarIcon}></div>
           <List>
             {" "}
             <ListItem>

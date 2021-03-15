@@ -1,3 +1,4 @@
+
 import React, { useState, lazy, Suspense } from "react";
 
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -25,30 +26,30 @@ function App() {
 
   return (
     <ThemeProvider theme={darkState ? darkTheme : lightTheme}>
-        <CssBaseline>
-          <Router_Switch>
-            <Suspense fallback={ProgressSpinner}>
-              <Route path="/register/" component={Register} />
-              <Route path="/login/" component={Login} />
-              <Route
-                path="/"
-                render={() =>
-                  localStorage.getItem("refresh_token") ? (
-                    <>
-                      <Dashboard
-                        handleThemeChange={handleThemeChange}
-                      ></Dashboard>
-                      {/* <Route path="/" component={DisplayFiles}></Route> */}
-                    </>
-                  ) : (
-                    <Redirect to="/login/"></Redirect>
-                  )
-                }
-              />
-              {/* <Route path="/" component={!(localStorage.getItem("refresh_token")) ? Login : Home} exact /> */}
-            </Suspense>
-          </Router_Switch>
-        </CssBaseline>
+      <CssBaseline>
+        <Router_Switch>
+          <Suspense fallback={ProgressSpinner}>
+            <Route path="/register/" component={Register} />
+            <Route path="/login/" component={Login} />
+            <Route
+              path="/"
+              render={() =>
+                localStorage.getItem("refresh_token") ? (
+                  <>
+                    <Dashboard
+                      handleThemeChange={handleThemeChange}
+                    ></Dashboard>
+                    {/* <Route path="/" component={DisplayFiles}></Route> */}
+                  </>
+                ) : (
+                  <Redirect to="/login/"></Redirect>
+                )
+              }
+            />
+            {/* <Route path="/" component={!(localStorage.getItem("refresh_token")) ? Login : Home} exact /> */}
+          </Suspense>
+        </Router_Switch>
+      </CssBaseline>
     </ThemeProvider>
   );
 }
