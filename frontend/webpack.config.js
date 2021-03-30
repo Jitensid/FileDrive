@@ -1,16 +1,13 @@
 const path = require("path");
 const webpack = require("webpack");
-const CompressionPlugin = require("compression-webpack-plugin");
-
-const { web } = require("webpack");
 
 module.exports = {
-  // mode: "production",
   entry: ["./src"],
   output: {
     path: path.resolve(__dirname, "./static/frontend"),
     filename: "[name].js",
-    publicPath: "http://localhost:8080/static/frontend/",
+    publicPath:
+      "https://django-react-drive-static.s3.amazonaws.com/static/frontend/",
   },
   module: {
     rules: [
@@ -62,7 +59,7 @@ module.exports = {
         NODE_ENV: JSON.stringify("production"),
       },
     }),
-    new CompressionPlugin(),
+    // new CompressionPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
 };

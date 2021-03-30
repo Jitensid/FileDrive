@@ -2,7 +2,7 @@ import axios from "axios";
 
 var baseURL = "";
 
-const development = true;
+const development = false;
 
 // console.log(location.hostname);
 

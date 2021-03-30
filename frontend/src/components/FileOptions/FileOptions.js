@@ -20,6 +20,24 @@ const FileOptions = (props) => {
     setAnchorEl(null);
   };
 
+  const handleDownload = (filename, fileURL) => {
+
+    AxiosApiInstance.AxiosApiInstance({
+      url: fileURL,
+      method: "GET",
+      responseType: "blob",
+    }).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+    });
+
+    handleClose();
+  };
+
   const getIndex = (filename) => {
     console.log(window.location.pathname);
     for (var i = props.backendFiles.length - 1; i >= 0; i--) {
@@ -118,12 +136,20 @@ const FileOptions = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={() => {
+            handleDownload(
+              props.uploadedfile.filename,
+              props.uploadedfile.file
+            );
+          }}
+        >
           {" "}
           <Link
             style={{ textDecoration: "inherit" }}
             href={props.uploadedfile.file}
             color="inherit"
+            target="_blank"
             download
           >
             Download

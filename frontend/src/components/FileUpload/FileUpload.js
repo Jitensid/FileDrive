@@ -29,12 +29,21 @@ function FileUpload(props) {
   const validateFile = (e) => {
     let file = e.target.files[0];
 
+    // if file size > 10 MB then reject file upload
+    if (file.size > 1e7) {
+      e.target.value = null;
+      alert("File Size cannot exceed 10MB");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
 
+    // track Axios Request and display progress until request is complete
     trackPromise(
       AxiosApiInstance.AxiosApiInstance.post("api/fileupload/", formData).then(
         (response) => {
+          // get all files
           const newbackendFiles = props.backendFiles.slice();
           const first_element = response.data;
 
@@ -44,9 +53,11 @@ function FileUpload(props) {
             }
           }
 
+          // Set state of files array with new file
           newbackendFiles.unshift(first_element);
           props.setbackendFiles(newbackendFiles);
 
+          // Display SnackBar after uploading is completed
           SnackbarDetails.setsnackbarstate({
             message: "File Uploaded Successfully",
             open: true,
@@ -54,6 +65,9 @@ function FileUpload(props) {
         }
       )
     );
+
+    // Remove file after file upload is complete
+    e.target.value = null;
   };
 
   return (
@@ -62,7 +76,7 @@ function FileUpload(props) {
         className={classes.input}
         id="contained-button-file"
         type="file"
-        onChange={validateFile}
+        onInput={validateFile}
         enctype="multipart/form-data"
       />
       <label htmlFor="contained-button-file">
