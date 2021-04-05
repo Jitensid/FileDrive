@@ -2,6 +2,7 @@ from django.urls import path
 import frontend.views as frontend_views
 from django.contrib.auth import views as auth_views
 
+# All urls will point to same HTML template because it is SPA application
 urlpatterns = [
     path('', frontend_views.index, name='index'),
     path('page/', frontend_views.index, name='page'),

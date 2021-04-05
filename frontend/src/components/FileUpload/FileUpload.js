@@ -24,6 +24,8 @@ const useStyles = makeStyles(() => ({
 
 function FileUpload(props) {
   const classes = useStyles();
+
+  // Initializing Snackbar Context
   const SnackbarDetails = useContext(SnackbarContext);
 
   const validateFile = (e) => {

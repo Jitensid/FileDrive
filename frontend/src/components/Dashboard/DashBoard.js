@@ -150,7 +150,7 @@ export default function Dashboard(props) {
               )}
             />
             <Route
-              path="/starred"
+              path="/starred/"
               render={() => (
                 <StarredFiles
                   backendFiles={backendFiles}

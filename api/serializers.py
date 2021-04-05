@@ -6,16 +6,16 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import File
 
 
+# User Serializer
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ('username')
 
-# For signUps
-
-
+# Serializer for Register User
 class UserSerializerWithToken(serializers.ModelSerializer):
+    # get refresh and access token with methods
     refresh_token = serializers.SerializerMethodField()
     access_token = serializers.SerializerMethodField()
     password = serializers.CharField(
@@ -24,23 +24,27 @@ class UserSerializerWithToken(serializers.ModelSerializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
 
+    # returns refresh_token for the user
     def get_refresh_token(self, obj):
         refresh = RefreshToken.for_user(
             User.objects.get(username=obj.username))
         return str(refresh)
 
+    # returns access_token for the user
     def get_access_token(self, obj):
         refresh = RefreshToken.for_user(
             User.objects.get(username=obj.username))
         return str(refresh.access_token)
 
     def create(self, validated_data):
+        # get password from the validated_data
         password = validated_data.pop('password', None)
         instance = self.Meta.model(**validated_data)
 
         if password is not None:
             instance.set_password(password)
 
+        # Save the object
         instance.save()
         return instance
 
@@ -50,6 +54,7 @@ class UserSerializerWithToken(serializers.ModelSerializer):
                   'email', 'first_name', 'last_name', 'password']
 
 
+# Serializer for uploading files
 class FileUploadSerializer(serializers.ModelSerializer):
     # owner = serializers.PrimaryKeyRelatedField(read_only=True)
     file = serializers.FileField()
@@ -72,14 +77,17 @@ class FileUploadSerializer(serializers.ModelSerializer):
         return desired_serializer
 
     def create(self, validated_data):
+        # fetch owner and then create the file object
         owner = validated_data.pop("owner")
         file_object = File.objects.create(
             owner=owner, **validated_data)
         return file_object
 
+    # Method to find size of the file
     def get_size(self, obj):
         return obj.file.size
 
+    # Method that returns filename
     def get_filename(self, obj):
         return obj.filename()
 
@@ -88,6 +96,7 @@ class FileUploadSerializer(serializers.ModelSerializer):
         fields = ('file', 'created', 'size', 'owner', 'filename')
 
 
+# Serializer for fetching files
 class FetchFileSerializer(serializers.ModelSerializer):
     file = serializers.FileField()
     size = serializers.SerializerMethodField()
@@ -106,9 +115,11 @@ class FetchFileSerializer(serializers.ModelSerializer):
             "%b %d %Y")
         return desired_serializer
 
+    # Method that returns size of the file
     def get_size(self, obj):
         return obj.file.size
 
+    # Method that returns filename
     def get_filename(self, obj):
         return obj.filename()
 
