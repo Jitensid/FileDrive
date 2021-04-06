@@ -15,20 +15,16 @@ import os
 from datetime import timedelta
 import json
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-ENVIRONMENT_VARIABLES_DICT = dotenv_values(
-    os.path.join(BASE_DIR, "Drive", ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ENVIRONMENT_VARIABLES_DICT["SECRET_KEY"]
+SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -159,14 +155,13 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 AWS_S3_REGION_NAME = 'ap-south-1'
 
-AWS_ACCESS_KEY_ID = ENVIRONMENT_VARIABLES_DICT["AWS_ACCESS_KEY_ID"]
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
 
-AWS_SECRET_ACCESS_KEY = ENVIRONMENT_VARIABLES_DICT["AWS_SECRET_ACCESS_KEY"]
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
 
-AWS_STORAGE_BUCKET_NAME = ENVIRONMENT_VARIABLES_DICT["AWS_STORAGE_BUCKET_NAME"]
+AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % ENVIRONMENT_VARIABLES_DICT[
-    "AWS_STORAGE_BUCKET_NAME"]
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % os.environ["AWS_STORAGE_BUCKET_NAME"]
 
 AWS_S3_FILE_OVERWRITE = True
 
