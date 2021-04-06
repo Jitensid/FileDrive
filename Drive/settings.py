@@ -15,28 +15,20 @@ import os
 from datetime import timedelta
 import json
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-with open(os.path.join(BASE_DIR, "Drive/secrets.json")) as secrets_file:
-    secrets = json.load(secrets_file)
-
-
-def get_secret(setting, secrets=secrets):
-    """Get secret setting or fail with ImproperlyConfigured"""
-    try:
-        return secrets[setting]
-    except KeyError:
-        raise ImproperlyConfigured("Set the {} setting".format(setting))
+ENVIRONMENT_VARIABLES_DICT = dotenv_values(
+    os.path.join(BASE_DIR, "Drive", ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret("SECRET_KEY")
-
+SECRET_KEY = ENVIRONMENT_VARIABLES_DICT["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -167,14 +159,14 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 AWS_S3_REGION_NAME = 'ap-south-1'
 
-AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID")
+AWS_ACCESS_KEY_ID = ENVIRONMENT_VARIABLES_DICT["AWS_ACCESS_KEY_ID"]
 
-AWS_SECRET_ACCESS_KEY = get_secret("AWS_SECRET_ACCESS_KEY")
+AWS_SECRET_ACCESS_KEY = ENVIRONMENT_VARIABLES_DICT["AWS_SECRET_ACCESS_KEY"]
 
-AWS_STORAGE_BUCKET_NAME = get_secret("AWS_STORAGE_BUCKET_NAME")
+AWS_STORAGE_BUCKET_NAME = ENVIRONMENT_VARIABLES_DICT["AWS_STORAGE_BUCKET_NAME"]
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % get_secret(
-    "AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % ENVIRONMENT_VARIABLES_DICT[
+    "AWS_STORAGE_BUCKET_NAME"]
 
 AWS_S3_FILE_OVERWRITE = True
 

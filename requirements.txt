@@ -25,12 +25,12 @@ lockfile==0.12.2
 msgpack==0.6.2
 packaging==20.3
 pep517==0.8.2
-pkg-resources==0.0.0
 progress==1.5
 pycparser==2.20
 PyJWT==1.7.1
 pyparsing==2.4.6
 python-dateutil==2.8.1
+python-dotenv==0.17.0
 pytoml==0.1.21
 pytz==2020.4
 requests==2.22.0
