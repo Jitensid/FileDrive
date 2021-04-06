@@ -11,6 +11,7 @@ contextlib2==0.6.0
 cryptography==3.3.1
 distlib==0.3.0
 distro==1.4.0
+dj-database-url==0.5.0
 Django==3.1.4
 django-cors-headers==3.6.0
 django-storages==1.11.1
@@ -30,6 +31,7 @@ pycparser==2.20
 PyJWT==1.7.1
 pyparsing==2.4.6
 python-dateutil==2.8.1
+python-decouple==3.4
 pytoml==0.1.21
 pytz==2020.4
 requests==2.22.0

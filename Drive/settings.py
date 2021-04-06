@@ -15,6 +15,8 @@ import os
 from datetime import timedelta
 import json
 from django.core.exceptions import ImproperlyConfigured
+from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -90,13 +92,20 @@ WSGI_APPLICATION = 'Drive.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if "DATABASE_URL" in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=config("DATABASE_URL")
+        )
     }
-}
 
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -155,13 +164,14 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 AWS_S3_REGION_NAME = 'ap-south-1'
 
-AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 
-AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 
-AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
 
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % os.environ["AWS_STORAGE_BUCKET_NAME"]
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % config(
+    "AWS_STORAGE_BUCKET_NAME")
 
 AWS_S3_FILE_OVERWRITE = True
 
