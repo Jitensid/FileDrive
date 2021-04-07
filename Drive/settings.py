@@ -92,6 +92,7 @@ WSGI_APPLICATION = 'Drive.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# Database config for production
 if "DATABASE_URL" in os.environ:
     DATABASES = {
         'default': dj_database_url.config(
@@ -99,6 +100,7 @@ if "DATABASE_URL" in os.environ:
         )
     }
 
+# Database config for development
 else:
     DATABASES = {
         'default': {

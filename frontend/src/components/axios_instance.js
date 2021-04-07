@@ -133,6 +133,10 @@ LoginAxiosApiInstance.interceptors.response.use(
   }
 );
 
+LoginAxiosApiInstance.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+LoginAxiosApiInstance.defaults.xsrfCookieName = "csrftoken";
+LoginAxiosApiInstance.defaults.withCredentials = true;
+
 export default {
   AxiosApiInstance,
   LoginAxiosApiInstance,
