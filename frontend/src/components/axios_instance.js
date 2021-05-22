@@ -120,6 +120,10 @@ const LoginAxiosApiInstance = axios.create({
   timeout: 50000,
 });
 
+LoginAxiosApiInstance.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+LoginAxiosApiInstance.defaults.xsrfCookieName = "csrftoken";
+LoginAxiosApiInstance.defaults.withCredentials = true;
+
 LoginAxiosApiInstance.interceptors.response.use(
   (response) => {
     alert("Login Successful!");
@@ -132,10 +136,6 @@ LoginAxiosApiInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-LoginAxiosApiInstance.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-LoginAxiosApiInstance.defaults.xsrfCookieName = "csrftoken";
-LoginAxiosApiInstance.defaults.withCredentials = true;
 
 export default {
   AxiosApiInstance,
