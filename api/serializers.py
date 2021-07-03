@@ -14,6 +14,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username')
 
 # Serializer for Register User
+
+
 class UserSerializerWithToken(serializers.ModelSerializer):
     # get refresh and access token with methods
     refresh_token = serializers.SerializerMethodField()
