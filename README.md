@@ -7,5 +7,6 @@ FileDrive is a file storage web application developed using Django as backend an
 2. React 
 3. Material UI
 4. React Router
+5. Axios
 
-Deployed on: https://react-django-file-storage.herokuapp.com/
+Webiste is deployed on : https://react-django-file-storage.herokuapp.com/
